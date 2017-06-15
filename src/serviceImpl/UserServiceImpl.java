@@ -36,10 +36,10 @@ public class UserServiceImpl implements UserService{
 			bw.flush();
 			bw.close();	
 		} catch (FileNotFoundException e) {
-			System.out.println("sorry, cannot find the userInfo file");
+			//System.out.println("sorry, cannot find the userInfo file");
 			return false;
 		} catch (IOException e) {
-			System.out.println("wrong");
+			//System.out.println("wrong");
 			return false;
 		}
 		
@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService{
 		
 		if(!file.exists()){
 			file.mkdirs();
-			//System.out.println(file.getAbsolutePath());
 		}
 		return true;
 	}
@@ -70,7 +69,7 @@ public class UserServiceImpl implements UserService{
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("sorry, cannot find the userInfo file");
+			//System.out.println("sorry, cannot find the userInfo file");
 			return false;
 		} catch (IOException e) {
 			return false;
@@ -103,7 +102,7 @@ public class UserServiceImpl implements UserService{
 			}
 			br.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("sorry, cannot find the userInfo file");
+			//System.out.println("sorry, cannot find the userInfo file");
 			return 0;
 		} catch (IOException e) {
 			return 0;

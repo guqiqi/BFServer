@@ -28,7 +28,6 @@ public class IOServiceImpl implements IOService{
 			bw.close();
 			return true;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -56,16 +55,9 @@ public class IOServiceImpl implements IOService{
 			br.close();
 			return file;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return file;
 		}
 		
-	}
-
-	@Override
-	public String readFileList(String userId) throws RemoteException {
-		// TODO Auto-generated method stub
-		return "OK";
 	}
 
 	@Override
@@ -86,7 +78,6 @@ public class IOServiceImpl implements IOService{
 				fw = new FileWriter(f, false);
 				fw.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 				return false;
 			}
 		}
@@ -108,8 +99,6 @@ public class IOServiceImpl implements IOService{
 			
 			br.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return 0;
 		}
 		
@@ -138,12 +127,8 @@ public class IOServiceImpl implements IOService{
 				br.close();
 				return content[0];
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				return "";
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				return "";
 			}
 		}

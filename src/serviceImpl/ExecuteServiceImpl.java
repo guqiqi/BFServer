@@ -10,6 +10,9 @@ public class ExecuteServiceImpl implements ExecuteService {
 	 */
 	@Override
 	public String execute(String code, String param) throws RemoteException {
+		if(code.equals(""))
+			return "Error!";
+		
 		//type是此时语言种类,0是错误,1是bf,2是ook
 		int type = 0; 
 		//result是运行结果

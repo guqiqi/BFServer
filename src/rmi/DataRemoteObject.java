@@ -34,12 +34,7 @@ public class DataRemoteObject extends UnicastRemoteObject implements IOService, 
 	public String readFile(String userId, String fileName) throws RemoteException{
 		return iOService.readFile(userId, fileName);
 	}
-
-	@Override
-	public String readFileList(String userId) throws RemoteException{
-		return iOService.readFileList(userId);
-	}
-
+	
 	@Override
 	public boolean login(String username, String password) throws RemoteException {
 		return userService.login(username, password);
