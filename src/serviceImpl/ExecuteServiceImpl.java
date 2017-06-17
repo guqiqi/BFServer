@@ -38,167 +38,132 @@ public class ExecuteServiceImpl implements ExecuteService {
 				type = 2;
 		}
 		
-		//bf编译
-		if(type == 1){
-			//先判断有几重循坏，以及确保循坏结构完整
-			for(int i = 0; i < code.length(); i ++){
-				if(code.charAt(i) == '[')
-					loopCount += 1;
-				else if(code.charAt(i) == ']')
-					endFlag += 1;
-			}
-						
-			if(endFlag < loopCount)
-				return "Error!";
-			else if(endFlag > loopCount)
-				return "Error!";
-					
-			//i是当前读取的字符在代码中的编号
-			try{
-				for(int i = 0; i < code.length(); i ++){
-					switch(code.charAt(i)){
-						case '>':
-							ptr += 1;
-							break;
-						case '<':
-							ptr -= 1;
-							break;
-						case '+': 
-							data[ptr] = (char)(data[ptr] + 1);
-							break;			
-						case '-': 
-							data[ptr] = (char)(data[ptr] - 1);
-							break;
-						case '.': 
-							result += (char)data[ptr];
-							break;
-						case ',': 
-							data[ptr] = param.charAt(count);
-							count += 1;
-							break;
-						case '[':
-							//如果指针结果不是0，继续往下
-							if(data[ptr] != 0)
-								break;
-							
-							//如果指针结果是0，跳转到对应]之后的命令
-							//先得到]出现的位置
-							flag = 1;
-							while(flag != 0){
-								i += 1;
-								
-								if(code.charAt(i) == '[')
-									flag += 1;
-								if(code.charAt(i) == ']')
-									flag -= 1;
-							}
-							break;	
-						case ']':
-							//如果指针结果是0，继续往下
-							if(data[ptr] == 0)
-								break;
-							
-							//如果指针结果不是0，跳转到对应[之后的命令
-							//先得到[出现的位置
-							flag = 1;
-							while(flag != 0){
-								i -= 1;
-								
-								if(code.charAt(i) == '[')
-									flag -= 1;
-								if(code.charAt(i) == ']')
-									flag += 1;
-							}
-							break;	
-						case ' ': 
-							break;
-						default:
-							return "Error!";
-					}						
-				} 
-				return result;
-			} catch(Exception e){
-				return "Error!";
-			}
-		}
-		//ook编译
-		else if(type == 2){
-			//先判断有几重循坏，以及确保循坏结构完整
-			for(int i = 0; i < code.length(); i = i + 10){
-				if(code.substring(i, i + 10).equals("Ook! Ook? ")) // '['
-					loopCount += 1;
+		//先把ook转换成BF
+		if(type == 2){
+			String code1 = "";
+			for(int i = 0; i < code.length() - 10; i = i + 10){
+				if(code.substring(i, i + 10).equals("Ook. Ook? ")) // '>'
+					code1 += ">";
+				else if(code.substring(i, i + 10).equals("Ook? Ook. ")) // '<'
+					code1 += "<";
+				else if(code.substring(i, i + 10).equals("Ook. Ook. ")) // '+'
+					code1 += "+";
+				else if(code.substring(i, i + 10).equals("Ook! Ook! ")) // '-'
+					code1 += "-";
+				else if(code.substring(i, i + 10).equals("Ook! Ook. ")) // '.'
+					code1 += ".";
+				else if(code.substring(i, i + 10).equals("Ook. Ook! ")) // ','
+					code1 += ",";
+				else if(code.substring(i, i + 10).equals("Ook! Ook? ")) // '['
+					code1 += "[";
 				else if(code.substring(i, i + 10).equals("Ook? Ook! ")) // ']'
-					endFlag += 1;
+					code1 += "]";
 			}
-						
-			if(endFlag < loopCount)
-				return "Error!";
-			else if(endFlag > loopCount)
-				return "Error!";
+			code = code1;
 			
-			//i是当前读取的字符串在代码中的编号
-			try{
-				for(int i = 0; i < code.length(); i = i + 10){
-					if(code.substring(i, i + 10).equals("Ook. Ook? ")) // '>'
+			String param1 = "";
+			for(int i = 0; i < param.length() - 10; i = i + 10){
+				if(param.substring(i, i + 10).equals("Ook. Ook? ")) // '>'
+					param1 += ">";
+				else if(param.substring(i, i + 10).equals("Ook? Ook. ")) // '<'
+					param1 += "<";
+				else if(param.substring(i, i + 10).equals("Ook. Ook. ")) // '+'
+					param1 += "+";
+				else if(param.substring(i, i + 10).equals("Ook! Ook! ")) // '-'
+					param1 += "-";
+				else if(param.substring(i, i + 10).equals("Ook! Ook. ")) // '.'
+					param1 += ".";
+				else if(param.substring(i, i + 10).equals("Ook. Ook! ")) // ','
+					param1 += ",";
+				else if(param.substring(i, i + 10).equals("Ook! Ook? ")) // '['
+					param1 += "[";
+				else if(param.substring(i, i + 10).equals("Ook? Ook! ")) // ']'
+					param1 += "]";
+			}
+			param = param1;
+		}
+		
+		//bf编译
+		//先判断有几重循坏，以及确保循坏结构完整
+		for(int i = 0; i < code.length(); i ++){
+			if(code.charAt(i) == '[')
+				loopCount += 1;
+			else if(code.charAt(i) == ']')
+				endFlag += 1;
+		}
+					
+		if(endFlag < loopCount)
+			return "Error!";
+		else if(endFlag > loopCount)
+			return "Error!";
+				
+		//i是当前读取的字符在代码中的编号
+		try{
+			for(int i = 0; i < code.length(); i ++){
+				switch(code.charAt(i)){
+					case '>':
 						ptr += 1;
-					else if(code.substring(i, i + 10).equals("Ook? Ook. ")) // '<'
+						break;
+					case '<':
 						ptr -= 1;
-					else if(code.substring(i, i + 10).equals("Ook. Ook. ")) // '+'
+						break;
+					case '+': 
 						data[ptr] = (char)(data[ptr] + 1);
-					else if(code.substring(i, i + 10).equals("Ook! Ook! ")) // '-'
+						break;			
+					case '-': 
 						data[ptr] = (char)(data[ptr] - 1);
-					else if(code.substring(i, i + 10).equals("Ook! Ook. ")) // '.'
+						break;
+					case '.': 
 						result += (char)data[ptr];
-					else if(code.substring(i, i + 10).equals("Ook. Ook! ")){ // ','
+						break;
+					case ',': 
 						data[ptr] = param.charAt(count);
 						count += 1;
-					}
-					else if(code.substring(i, i + 10).equals("Ook! Ook? ")){ // '['
+						break;
+					case '[':
 						//如果指针结果不是0，继续往下
 						if(data[ptr] != 0)
 							break;
 						
-						//如果指针结果是0，跳转到对应Ook? Ook! 之后的命令
-						//先得到Ook? Ook! 出现的位置
+						//如果指针结果是0，跳转到对应]之后的命令
+						//先得到]出现的位置
 						flag = 1;
 						while(flag != 0){
-							i += 10;
+							i += 1;
 							
-							if(code.substring(i, i + 10).equals("Ook! Ook? ")) // '['
+							if(code.charAt(i) == '[')
 								flag += 1;
-							if(code.substring(i, i + 10).equals("Ook? Ook! ")) // ']'
+							if(code.charAt(i) == ']')
 								flag -= 1;
 						}
-					}
-					else if(code.substring(i, i + 10).equals("Ook? Ook! ")){ // ']'
+						break;	
+					case ']':
 						//如果指针结果是0，继续往下
 						if(data[ptr] == 0)
 							break;
 						
-						//如果指针结果不是0，跳转到对应Ook! Ook? 之后的命令
-						//先得到Ook! Ook? 出现的位置
+						//如果指针结果不是0，跳转到对应[之后的命令
+						//先得到[出现的位置
 						flag = 1;
 						while(flag != 0){
 							i -= 1;
 							
-							if(code.substring(i, i + 10).equals("Ook! Ook? ")) // '['
+							if(code.charAt(i) == '[')
 								flag -= 1;
-							if(code.substring(i, i + 10).equals("Ook? Ook! ")) // ']'
+							if(code.charAt(i) == ']')
 								flag += 1;
 						}
-					}
-					else if(code.substring(i, i + 10).equals("          "))
+						break;	
+					case ' ': 
 						break;
-					else
-						return "Error!";						
-				} 
-				return result;
-			} catch(Exception e){
-				return "Error!";
-			}
-		}
-		else 
+					default:
+						return "Error!";
+				}						
+			} 
+			return result;
+		} catch(Exception e){
 			return "Error!";
-		
+		}
 	}
+	
 }
