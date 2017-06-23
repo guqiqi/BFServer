@@ -41,7 +41,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 		//先把ook转换成BF
 		if(type == 2){
 			String code1 = "";
-			for(int i = 0; i < code.length() - 10; i = i + 10){
+			for(int i = 0; i < code.length(); i = i + 10){
 				if(code.substring(i, i + 10).equals("Ook. Ook? ")) // '>'
 					code1 += ">";
 				else if(code.substring(i, i + 10).equals("Ook? Ook. ")) // '<'
@@ -60,27 +60,6 @@ public class ExecuteServiceImpl implements ExecuteService {
 					code1 += "]";
 			}
 			code = code1;
-			
-			String param1 = "";
-			for(int i = 0; i < param.length() - 10; i = i + 10){
-				if(param.substring(i, i + 10).equals("Ook. Ook? ")) // '>'
-					param1 += ">";
-				else if(param.substring(i, i + 10).equals("Ook? Ook. ")) // '<'
-					param1 += "<";
-				else if(param.substring(i, i + 10).equals("Ook. Ook. ")) // '+'
-					param1 += "+";
-				else if(param.substring(i, i + 10).equals("Ook! Ook! ")) // '-'
-					param1 += "-";
-				else if(param.substring(i, i + 10).equals("Ook! Ook. ")) // '.'
-					param1 += ".";
-				else if(param.substring(i, i + 10).equals("Ook. Ook! ")) // ','
-					param1 += ",";
-				else if(param.substring(i, i + 10).equals("Ook! Ook? ")) // '['
-					param1 += "[";
-				else if(param.substring(i, i + 10).equals("Ook? Ook! ")) // ']'
-					param1 += "]";
-			}
-			param = param1;
 		}
 		
 		//bf编译
